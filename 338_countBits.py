@@ -12,10 +12,10 @@ class Solution:
         result = [0, 1]
         for i in range(2, num + 1):
             if i % 2 == 0:
-                # 当前数是偶数的话，与i / 2的1的个数一致
+                # 当前数是偶数的话，与i / 2的二进制表示中1的个数一致
                 result.append(result[i//2])
             else:
-                # 当前数是奇数的话，比i / 2的1的个数多1
+                # 当前数是奇数的话，比i / 2的二进制表示中1的个数多1
                 result.append(result[i//2]+1)
 
         return result
