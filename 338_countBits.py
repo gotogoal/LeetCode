@@ -24,3 +24,4 @@ class Solution:
 if __name__ == '__main__':
     solution = Solution()
     print(solution.countBits(11))
+    print(solution.countBits(10))
