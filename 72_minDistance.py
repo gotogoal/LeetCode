@@ -17,8 +17,7 @@ class Solution:
                 distance = min(  # 只保留最优解的结果
                     self.get_edit_distance(strA, strB[:-1]) + 1,  # 插入操作
                     self.get_edit_distance(strA[:-1], strB) + 1,  # 删除操作
-                    self.get_edit_distance(strA[:-1], strB[:-1]) + 1,  # 替换操作
-                )
+                    self.get_edit_distance(strA[:-1], strB[:-1]) + 1)  # 替换操作
 
             return distance
 
