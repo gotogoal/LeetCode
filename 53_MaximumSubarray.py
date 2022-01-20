@@ -35,5 +35,5 @@ class Solution:
 
 if __name__ == '__main__':
     solution = Solution()
-    nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+    nums = [5, -3, 5]
     print(solution.maxSubArray(nums))
