@@ -1,51 +1,53 @@
 class Solution:
-	def longestPalindrome(self, s: str) -> str:
-		"""马拉车算法 --- 时间复杂度降低到线性"""
-		S = "^#"
-		for i in range(0, len(s)):
-			S = S + s[i] + "#"
-		S = S + "$"
-		print(S)
-		P = [0 for i in range(0, len(S))]
-		print(P)
-		M = 0
-		R = 0
-		for i in range(1, len(S) - 1):
-			j = M * 2 - i
-			if R > i:
-				if R - i > P[j]:
-					P[i] = P[j]
+
+	def __init__(self):
+		pass
+
+	def longestPalindrome(self, s):
+		"""
+        :type s: str
+        :rtype: str
+        """
+		n = len(s)
+		if n == 1:
+			return s
+		# 长度大于1，则至少一个字符是回文的
+		begin = 0
+		max_len = 1
+		# dp[i][j] 表示 s[i..j] 是否是回文串
+		dp = [[False] * n for _ in range(n)]
+		# 自己到自己肯定是回文
+		for i in range(n):
+			dp[i][i] = True
+			
+		# 枚举回文子串的长度 2->n
+		for L in range(2, n+1):
+			# 枚举左边界，左边界的上限设置可以宽松一些
+			for i in range(n):
+				j = L + i - 1
+				# 右边界最大值为:j=n-1
+				if j > n-1:
+					break
+
+				if s[i] != s[j]:
+					dp[i][j] = False
 				else:
-					P[i] = R - i
-			else:
-				P[i] = 0
-			# print("P[i]:" + str(P[i]))
-			# print("i:" + str(i))
-			# print("S[i]" + str(S[i]))
-			while S[i + P[i] + 1] == S[i - P[i] - 1]:
-				P[i] = P[i] + 1
-			# print(P[i])
+					# j - i 最大为2, L最大为3时
+					if j - i < 3:
+						dp[i][j] = True
+					else:
+						dp[i][j] = dp[i + 1][j - 1]
 
-			if i + P[i] > R:
-				R = i + P[i]
-				M = i
-		# print(P)
-		Center = 0
-		maxl = 0
-		for i in range(1, len(S) - 1):
-			if P[i] >= maxl:
-				maxl = P[i]
-				Center = i
+				# 只要 dp[i][L] == true 成立，就表示子串 s[i..L] 是回文，此时记录回文长度和起始位置
+				if dp[i][j] and j - i + 1 > max_len:
+					max_len = j - i + 1
+					begin = i
 
-		start = int((Center - maxl) / 2)
-		end = start + maxl
-		# print(start)
-		# print(end)
-		return s[start:end]
+		return s[begin:begin + max_len]
 
-
+					
 if __name__ == '__main__':
 	solution = Solution()
-	print(solution.longestPalindrome('babad'))
-	print(solution.longestPalindrome('cbbd'))
-	print(solution.longestPalindrome('ac'))
+	s = "cstgvkbrxacmpxdxxktktvpdzcuxmnhvuxdgsmskgeeawzeikhtmhdvnccbrgifpzmiuytfmeyfoxsntrdtxeuxcqsndexbgfxnthqwveujqzemloooyddparbjcuiwpopjwvvmwblsamkhjhlnoxinkpsempexmipifsfwzxbetgvfnkngzxcpizwctpdlpngjpyovmjllxfiwktghkxvyelwjwdztujmunijfsfdvmhgqhlpouewgyznphlmccjmqaqncwbeqheohibafqfunfywmrvqvjygjwqoclijwkcfiuaiymeagdbwyejnvtosxylptbtyoahfzfmwzrkhzdamknleroffmsqcaryibamgdpcumlhrblypddzhaxfeztokgogzgvpfvlmetiwsamhdidmvxavleryfyakendwrbslcavlqkerrnvpuzhdgwzuyorxzbkzhxhpbvkflgxouvaavxrdzsjlgrmogzvlhhdidldsxqhrqlryaanffhxnutcycnczuedtrwcnfiqrtoafvdfnfhxhyjivzalozrbrajboecfyalisxxanduzraqdrbzsbkobaieqpzcawrunxucypqyjnmrlrlivrrwwhdpekeelsphhunzbhkkejvqfopjsuholutgmtnleqdrntbqgrobnuhqpdkbjtikijkdiwqvnxgajaaqgswrdamzv"
+	print(solution.longestPalindrome(s))
+			
