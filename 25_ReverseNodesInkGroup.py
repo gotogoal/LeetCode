@@ -25,7 +25,7 @@ class Solution(object):
         a = head
         b = head
         for i in range(k):
-            # 不足 k 个，不需要反转，base case
+            # 不足 k 个, 不需要反转: base case
             if not b:
                 return head
             b = b.next
