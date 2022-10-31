@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time     :       2022/9/6 11:23
+# @Time     :       2022/10/31 14:57
 # @Author   :       YH
-# @FILE     :       102_BTLevelOrderTraversal.py
+# @FILE     :       103. ZigzagLevelOrder.py
 # @Software :       PyCharm
 
 
@@ -13,19 +13,19 @@ class TreeNode():
         self.left = left
         self.right = right
 
-
 class Solution():
     # 树类
     def __init__(self):
         self.root = TreeNode()
 
     # 层次遍历核心代码
-    def levelOrder(self, root):
+    def zigzagLevelOrder(self, root):
         if not root:
             return []
 
         queue = [root]
         res = []
+        flag = 1
 
         while queue:
             var = []
@@ -36,7 +36,12 @@ class Solution():
                     nxt.append(node.left)
                 if node.right:
                     nxt.append(node.right)
-            res.append(var)
+            if flag == 1:
+                res.append(var)
+                flag = 0
+            else:
+                res.append(var[::-1])
+                flag = 1
             queue = nxt
-        
+
         return res
