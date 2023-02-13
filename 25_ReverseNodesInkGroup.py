@@ -24,6 +24,7 @@ class Solution(object):
             return head
         a = head
         b = head
+        # 区间 [a, b) 包含 k 个待反转元素：k次循环
         for i in range(k):
             # 不足 k 个, 不需要反转: base case
             if not b:
