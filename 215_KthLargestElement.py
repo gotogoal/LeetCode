@@ -49,10 +49,10 @@ class Solution(object):
             if pos == target:
                 return nums[pos]
             # 要往左找
-            elif pos > k:
+            elif pos > target:
                 high = pos - 1
             # 要往右找
-            elif pos < k:
+            elif pos < target:
                 low = pos + 1
 
     def partition(self, nums, i, j):
