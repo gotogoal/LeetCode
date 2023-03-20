@@ -31,10 +31,10 @@ class Solution:
     def lowestCommonAncestor(self, root, p, q):
         if root == None:
             return None
-        left = self.lowestCommonAncestor(root.left,p,q)
-        right = self.lowestCommonAncestor(root.right,p,q)
         if root == p or root == q:
             return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
         # 第四种情况:左右子树都能找到,说明此时的p结点和q结点分居root结点两侧
         if left and right:
             return root

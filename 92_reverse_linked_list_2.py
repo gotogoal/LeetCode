@@ -6,42 +6,41 @@ class ListNode(object):
 
 
 class Solution(object):
-    def reverseList(self, head, left, right):
+    def reverseBetween(self, head, m, n):
         if not head:
             return head
-        pre = None
+        
+        # 临时节点
+        Lhead = ListNode(0)
+        Lhead.next = head
+
+        # 用于寻找m处的节点以及m的前驱节点
+        pre = Lhead
         cur = head
-        while cur != left:
+
+        # 当 m=1 时, 已经找到了 m 节点与 m 的前驱
+        while m > 1:
             pre = cur
             cur = cur.next
-        # [left,right) 之间的反转
-        new = self.reverse(left, right)
-        
-        # right 由于没被反转,直接追加到cur节点后
-        if pre:
-            pre.next = right
-        else:
-            head = right
-        
-        # right 后的节点保持不变
-        tmp = right.next
-        
-        # 反转后的头结点至于 right 后
-        right.next = new
-        
-        # right 后的节点置给反转后的链表尾部-即 left 后 
-        left.next = tmp
-        return head
-    
-    def reverse(self, left, right):
-        pre = None
-        cur = left
-        while cur!=right:
+            m -= 1
+            n -= 1
+        # 将找到的 m 节点与 m 的前驱先保存起来
+        m_pre, m_cur = pre, cur
+
+        # 开始对 n 段长的节点进行反转:即对 cur 后的n(已经发生变化了的n)个节点反转
+        # 反转后的头结点是 pre, 而 cur 指向最后那短剑结点
+        while n:
             nxt = cur.next
             cur.next = pre
             pre = cur
             cur = nxt
-        return pre
+            n -= 1
+
+        # 反转完成后, 将链表连接起来，链表题建议画图理解
+        m_pre.next = pre
+        m_cur.next = cur
+    
+        return Lhead.next
 
 
 if __name__ == '__main__':
