@@ -1,40 +1,32 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-def func(nums, k):
-    low = 0
-    high = len(nums) - 1
-    target = k - 1
-    while True:
-        pos = partitions(nums, low, high)
-        if pos == target:
-            return nums[pos]
-        elif pos > target:
-            high = pos - 1
-        else:
-            low = pos + 1
+class Solution:
+    def __init__(self):
+        pass
+    
+    def quick_sort(self, nums, low, high):
+        if low < high:
+            pos = self.partition(nums, low, high)
+            self.quick_sort(nums, low, pos-1)
+            self.quick_sort(nums, pos+1, high)
+        return nums
         
-    return -1
-    
-def partitions(nums, i, j):
-    value = nums[i]
-    
-    while i < j:
-        while i < j and nums[j] <= value:
-            j -= 1
-        nums[i] = nums[j]
+    def partition(self, nums, i, j):
+        value = nums[i]
+        while(i<j):
+            while i < j and nums[j] >= value:
+                j -= 1
+            nums[i] = nums[j]
+            while i < j and nums[i] <= value:
+                i += 1
+            nums[j] = nums[i]
+        nums[j] = value
+        return j
         
-        while i < j and nums[i] >= value:
-            i += 1
-        nums[j] = nums[i]
-    
-    nums[j] = value
-    return j
-    
-            
-        
-    
             
 
+
 if __name__ == '__main__':
-    print(func('0', '0'))
+    solution = Solution()
+    print(solution.longest('abcdecmncdighlmnopm'))
