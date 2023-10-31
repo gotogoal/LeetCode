@@ -1,32 +1,35 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-class Solution:
-    def __init__(self):
-        pass
-    
-    def quick_sort(self, nums, low, high):
-        if low < high:
-            pos = self.partition(nums, low, high)
-            self.quick_sort(nums, low, pos-1)
-            self.quick_sort(nums, pos+1, high)
-        return nums
-        
-    def partition(self, nums, i, j):
-        value = nums[i]
-        while(i<j):
-            while i < j and nums[j] >= value:
-                j -= 1
-            nums[i] = nums[j]
-            while i < j and nums[i] <= value:
-                i += 1
-            nums[j] = nums[i]
-        nums[j] = value
-        return j
-        
+def T(nums):
+    n = len(nums)
+    if n < 3:
+        return []
+    i = 0
+    nums.sort()
+    if nums[0] > 0:
+        return []
+    res = []
+    for i in range(n):
+        if (i>0 and nums[i] == nums[i-1]):
+            continue
+        L = i + 1
+        R = n - 1
+        while L < R:
+            if (nums[i] + nums[L] + nums[R] == 0):
+                res.append([nums[i], nums[L], nums[R]])
+                while L<R and nums[L] == nums[L+1]:
+                    L += 1
+                while L<R and nums[R] == nums[R-1]:
+                    R -= 1
+                L += 1
+                R -= 1
             
+            elif (nums[i] + nums[L] + nums[R] > 0):
+                R -= 1
+            else:
+                L += 1
+    return res
 
 
 if __name__ == '__main__':
-    solution = Solution()
-    print(solution.longest('abcdecmncdighlmnopm'))
+    a = [2,5,6,-7,-1,-3,-5,-4,8,3]
+    print(T(a))
+    
