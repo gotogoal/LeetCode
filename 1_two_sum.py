@@ -1,3 +1,4 @@
+# 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
 class Solution(object):
 	def twoSum(self, nums, target):
 		"""

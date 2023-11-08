@@ -1,35 +1,65 @@
-def T(nums):
-    n = len(nums)
-    if n < 3:
-        return []
-    i = 0
-    nums.sort()
-    if nums[0] > 0:
-        return []
-    res = []
-    for i in range(n):
-        if (i>0 and nums[i] == nums[i-1]):
-            continue
-        L = i + 1
-        R = n - 1
-        while L < R:
-            if (nums[i] + nums[L] + nums[R] == 0):
-                res.append([nums[i], nums[L], nums[R]])
-                while L<R and nums[L] == nums[L+1]:
-                    L += 1
-                while L<R and nums[R] == nums[R-1]:
-                    R -= 1
-                L += 1
-                R -= 1
-            
-            elif (nums[i] + nums[L] + nums[R] > 0):
-                R -= 1
-            else:
-                L += 1
-    return res
+class DLinkedNode:
+    def __init__(self, key=0, value=0):
+        self.key = key
+        self.value = value
+        self.prev = None
+        self.next = None
 
 
-if __name__ == '__main__':
-    a = [2,5,6,-7,-1,-3,-5,-4,8,3]
-    print(T(a))
+class LRUCache:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.size = 0
+        self.cache = {}
+        self.head = DLinkedNode()
+        self.tail = DLinkedNode()
+        self.head.next = self.tail
+        self.tail.prev = self.head
     
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]
+        self.MoveToHead(node)
+        return node.value
+    
+    def MoveToHead(self, node):
+        self.RemoveNode(node)
+        self.AddToHead(node)
+    
+    def RemoveNode(self, node):
+        nxt = node.next
+        pre = node.prev
+        pre.next = nxt
+        nxt.prev = pre
+    
+    def AddToHead(self, node):
+        node.next = self.head.next
+        node.prev = self.head
+        self.head.next.prev = node
+        self.head.next = node
+        
+    def put(self, key, value):
+        if key in self.cache:
+            node = self.cache[key]
+            self.MoveToHead(node)
+            node.value = value
+        else:
+            node = DLinkedNode(key, value)
+            self.cache[key] = node
+            self.size += 1
+            self.AddToHead(node)
+            if self.size > self.capacity:
+                node = self.RemoveTail()
+                self.cache.pop(node.key)
+                self.size -= 1
+    
+    def RemoveTail(self):
+        node = self.tail.prev
+        self.RemoveNode(node)
+        return node
+                
+                
+            
+            
+        
