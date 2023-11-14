@@ -23,13 +23,11 @@ class Solution(object):
             mid = (start + end) // 2
             if nums[mid] == target:
                 return mid
-            # 说明旋转下标在 mid下标 后，因为从 start 到 mid 还是升序的
             elif nums[mid] >= nums[start]:
                 if nums[start] <= target and target < nums[mid]:
                     end = mid - 1
                 else:
                     start = mid + 1
-            # 旋转点在 mid 之前
             else:
                 if nums[mid] < target and target <= nums[end]:
                     start = mid + 1
