@@ -28,32 +28,12 @@ class Solution(object):
 
 		return max_len
 	
-	# 暴力法:两个循环
-	def lengthOfLongestSubstring_stupid(self, s):
-		max_len = 0
-		n = len(s)
-		# 遍历
-		for i in range(n):
-			tmp = []
-			# 从当前字符到最后
-			for j in range(i, n):
-				if s[j] not in tmp:
-					tmp.append(s[j])
-				else:
-					if len(tmp) > max_len:
-						max_len = len(tmp)
-					break
-		return max_len
-
 
 if __name__ == '__main__':
 	solution = Solution()
 	test = 'abcabcbb'
-	print(solution.lengthOfLongestSubstring_stupid(test))
 	print(solution.lengthOfLongestSubstring(test))
 	test = 'bbbbb'
-	print(solution.lengthOfLongestSubstring_stupid(test))
 	print(solution.lengthOfLongestSubstring(test))
 	test = 'pwwkew'
-	print(solution.lengthOfLongestSubstring_stupid(test))
 	print(solution.lengthOfLongestSubstring(test))
